@@ -1,4 +1,4 @@
-import { isWeapon, isCharacter } from './utils'
+import { isWeapon, isCharacter, isUP } from './utils'
 
 const itemCount = (map, name) => {
   if (!map.has(name)) {
@@ -13,11 +13,12 @@ const gachaDetail = (data) => {
   for (let [key, value] of data) {
     let detail = {
       count3: 0, count4: 0, count5: 0,
-      count3w: 0, count4w: 0, count5w: 0, count4c: 0, count5c: 0,
+      count3w: 0, count4w: 0, count5w: 0, count4c: 0, count5c: 0, upc: 0, nupc: 0,
       weapon3: new Map(), weapon4: new Map(), weapon5: new Map(),
       char4: new Map(), char5: new Map(),
       date: [],
-      ssrPos: [], countMio: 0, total: value.length
+      ssrPos: [], countMio: 0, total: value.length,
+      tupc: 0, uknc: 0
     }
     let lastSSR = 0
     let dateMin = 0
@@ -47,7 +48,18 @@ const gachaDetail = (data) => {
           itemCount(detail.char4, name)
         }
       } else if (rank === 5) {
-        detail.ssrPos.push([name, index + 1 - lastSSR, time, wishType])
+        let up = isUP(name, wishType, timestamp);
+        let count = index + 1 - lastSSR;
+        detail.ssrPos.push([name, count, time, wishType, up])
+        if (up === true) {
+            detail.upc += 1
+            detail.tupc += count
+        } else if (up === false) {
+            detail.nupc += 1
+            detail.tupc += count
+        } else if (isCharacter(type)) {
+            detail.uknc += count
+        }
         lastSSR = index + 1
         detail.count5++
         detail.countMio = 0

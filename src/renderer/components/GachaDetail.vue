@@ -30,10 +30,15 @@
     <span :title="`${item[2]}${item[3] === '400' ? '\n' + props.i18n.excel.wish2 : ''}`" :class="{wish2: item[3] === '400'}" class="cursor-help mr-1" :style="`color:${colorList[index]}`"
       v-for="(item, index) of detail.ssrPos" :key="item"
     >
-      {{item[0]}}[{{item[1]}}]
+      {{item[0]}}[{{item[1]}}]<span v-if="item[4] === false" class="text-red-600">[歪]</span>
+      <span v-if="type == '301' && item[4] === null" class="text-red-600">[未知]</span>
     </span>
   </p>
   <p v-if="detail.ssrPos.length" class="text-gray-600 text-xs">{{text.average}}{{colon}}<span class="text-green-600">{{avg5(detail.ssrPos)}}</span></p>
+  <p v-if="type == '301' && detail.ssrPos.length" class="text-gray-600 text-xs">5星统计{{colon}}
+    <span class="text-red-600">歪{{detail.nupc}}次</span> <span v-if="detail.upc + detail.nupc != detail.count5c" class="text-red-600">未知{{detail.count5c - detail.upc - detail.nupc}}次</span>
+  </p>
+  <p v-if="type == '301' && detail.ssrPos.length && detail.upc" class="text-gray-600 text-xs">5星UP平均出货次数{{colon}}<span class="text-green-600">{{ Math.round(detail.tupc / detail.upc * 100) / 100 }}</span></p>
 </template>
 
 <script setup>
