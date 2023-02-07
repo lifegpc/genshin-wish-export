@@ -38,7 +38,7 @@
   <p v-if="type == '301' && detail.ssrPos.length" class="text-gray-600 text-xs">5星统计{{colon}}
     <span class="text-red-600">歪{{detail.nupc}}次</span> <span v-if="detail.upc + detail.nupc != detail.count5c" class="text-red-600">未知{{detail.count5c - detail.upc - detail.nupc}}次</span>
   </p>
-  <p v-if="type == '301' && detail.ssrPos.length && detail.upc" class="text-gray-600 text-xs">5星UP平均出货次数{{colon}}<span class="text-green-600">{{ Math.round(detail.tupc / detail.upc * 100) / 100 }}</span></p>
+  <p v-if="type == '301' && detail.ssrPos.length && detail.upc" class="text-gray-600 text-xs">5星UP平均出货次数{{colon}}<span class="text-green-600">{{ avgUp5(detail.ssrPos) }}</span></p>
 </template>
 
 <script setup>
@@ -61,6 +61,22 @@ const avg5 = (list) => {
     n += item[1]
   })
   return parseInt((n / list.length) * 100) / 100
+}
+
+const avgUp5 = (list) => {
+    let total = 0
+    let count = 0
+    let last = 0
+    list.forEach(item => {
+        if (item[4] === null) return;
+        last += item[1];
+        if (item[4] === true) {
+            total += last;
+            last = 0;
+            count++;
+        }
+    })
+    return Math.round(total / count * 100) / 100
 }
 
 const percent = (num, total) => {
