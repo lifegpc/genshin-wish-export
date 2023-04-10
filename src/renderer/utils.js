@@ -19,6 +19,10 @@ const AratakiIttoNames = new Set([
     '荒泷一斗', 'Arataki Itto', '荒瀧一斗', 'Аратаки Итто', 'Аратакі Ітто'
 ])
 
+const BaizhuNames = new Set([
+    '白术', 'Baizhu', '白朮', '백출', 'Бай Чжу'
+])
+
 const CynoNames = new Set([
     '赛诺', 'Cyno', '賽諾', 'セノ', 'Сайно', 'Кіно'
 ])
@@ -118,6 +122,7 @@ const ZhongliNames = new Set([
 const isAlbedo = (name) => AlbedoNames.has(name)
 const isAlhaitham = (name) => AlhaithamNames.has(name)
 const isAratakiItto = (name) => AratakiIttoNames.has(name)
+const isBaizhu = (name) => BaizhuNames.has(name)
 const isCyno = (name) => CynoNames.has(name)
 const isDehya = (name) => DehyaNames.has(name)
 const isEula = (name) => EulaNames.has(name)
@@ -220,6 +225,9 @@ const isUP = (name, type, timestamp) => {
     // 3.5
     if (timestamp >= 1677621600000 && timestamp < 1679392800000) return type == "301" ? isDehya(name) : isCyno(name)
     if (timestamp >= 1679392800000 && timestamp < 1681196400000) return type == "301" ? isShenhe(name) : isKamisatoAyaka(name)
+    // 3.6
+    if (timestamp >= 1681250400000 && timestamp < 1683021600000) return type == "301" ? isNahida(name) : isNilou(name)
+    if (timestamp >= 1683021600000 && timestamp < 1684825200000) return type == "301" ? isBaizhu(name) : isGanyu(name)
     return null;
 }
 
