@@ -1,6 +1,6 @@
 import * as IconComponents from "@element-plus/icons-vue";
 const weaponTypeNames = new Set([
-  '光锥', 'Light Cone'
+  '光锥', 'Light Cone', '光錐', 'Lichtkegel', 'Conos de luz', 'cônes de lumière', '光円錐', '광추', 'Cones de Luz', 'Световые конусы', 'Nón Ánh Sáng'
 ])
 
 const characterTypeNames = new Set([
@@ -8,7 +8,7 @@ const characterTypeNames = new Set([
 ])
 
 const SeeleNames = new Set([
-    '希儿', '希兒', 'Seele', 'ゼーレ'
+    '希儿', '希兒', 'Seele', 'ゼーレ', '제레', 'Зеле'
 ])
 
 const isCharacter = (name) => characterTypeNames.has(name)
