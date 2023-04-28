@@ -1,5 +1,5 @@
 {
-  "name": "genshin-wish-export",
+  "name": "hsr-wish-export",
   "version": "0.8.16",
   "main": "./dist/electron/main/main.js",
   "author": "biuuu <https://github.com/biuuu>",
@@ -33,8 +33,8 @@
         "url": "http://127.0.0.1"
       }
     ],
-    "productName": "Genshin Wish Export",
-    "appId": "org.biuuu.genshin-wish-export",
+    "productName": "HSR Wish Export",
+    "appId": "org.biuuu.hsr-wish-export",
     "directories": {
       "output": "build"
     },

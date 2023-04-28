@@ -10,8 +10,8 @@ const { enableProxy, disableProxy } = require('./module/system-proxy')
 const mitmproxy = require('./module/node-mitmproxy')
 
 const dataMap = new Map()
-const order = ['301', '302', '200', '100']
-let apiDomain = 'https://hk4e-api.mihoyo.com'
+const order = ['11', '12', '1', '2']
+let apiDomain = 'https://api-takumi.mihoyo.com'
 
 const saveData = async (data, url) => {
   const obj = Object.assign({}, data)
@@ -23,10 +23,10 @@ const saveData = async (data, url) => {
 }
 
 const defaultTypeMap = new Map([
-  ['301', '角色活动祈愿'],
-  ['302', '武器活动祈愿'],
-  ['200', '常驻祈愿'],
-  ['100', '新手祈愿']
+  ['11', '角色活动跃迁'],
+  ['12', '光锥活动跃迁'],
+  ['1', '群星跃迁'],
+  ['2', '始发跃迁']
 ])
 
 let localDataReaded = false
@@ -120,12 +120,13 @@ const detectGameLocale = async (userPath) => {
   let list = []
   const lang = app.getLocale()
   try {
-    await fs.access(path.join(userPath, '/AppData/LocalLow/miHoYo/', '原神/output_log.txt'), fs.constants.F_OK)
-    list.push('原神')
+    await fs.access(path.join(userPath, '/AppData/LocalLow/miHoYo/', '崩坏：星穹铁道/output_log.txt'), fs.constants.F_OK)
+    list.push('崩坏：星穹铁道')
   } catch (e) {}
   try {
-    await fs.access(path.join(userPath, '/AppData/LocalLow/miHoYo/', 'Genshin Impact/output_log.txt'), fs.constants.F_OK)
-    list.push('Genshin Impact')
+    /// 不保证正确
+    await fs.access(path.join(userPath, '/AppData/LocalLow/miHoYo/', 'Star Rail/output_log.txt'), fs.constants.F_OK)
+    list.push('Star Rail')
   } catch (e) {}
   if (config.logType) {
     if (config.logType === 2) {
@@ -155,10 +156,10 @@ const readLog = async () => {
     }
     const promises = gameNames.map(async name => {
       const logText = await fs.readFile(`${userPath}/AppData/LocalLow/miHoYo/${name}/output_log.txt`, 'utf8')
-      const gamePathMch = logText.match(/\w:\/.+(GenshinImpact_Data|YuanShen_Data)/)
+      const gamePathMch = logText.match(/\w:\/.+(StarRail_Data)/)
       if (gamePathMch) {
         const cacheText = await fs.readFile(path.join(gamePathMch[0], '/webCaches/Cache/Cache_Data/data_2'), 'utf8')
-        const urlMch = cacheText.match(/https.+?auth_appid=webview_gacha.+?authkey=.+?game_biz=hk4e_\w+/g)
+        const urlMch = cacheText.match(/https.+?auth_appid=webview_gacha.+?authkey=.+?game_biz=hkrpg_\w+/g)
         if (urlMch) {
           cacheFolder = path.join(gamePathMch[0], '/webCaches/Cache/')
           return urlMch[urlMch.length - 1]
@@ -204,7 +205,7 @@ const getGachaLogs = async ({ name, key }, queryString) => {
   let res = []
   let uid = 0
   let endId = 0
-  const url = `${apiDomain}/event/gacha_info/api/getGachaLog?${queryString}`
+  const url = `${apiDomain}/common/gacha_record/api/getGachaLog?${queryString}`
   do {
     if (page % 10 === 0) {
       sendMsg(i18n.parse(text.fetch.interval, { name, page }))
@@ -263,7 +264,7 @@ const checkResStatus = (res) => {
 }
 
 const tryGetUid = async (queryString) => {
-  const url = `${apiDomain}/event/gacha_info/api/getGachaLog?${queryString}`
+  const url = `${apiDomain}/common/gacha_record/api/getGachaLog?${queryString}`
   try {
     for (let [key] of defaultTypeMap) {
       const res = await request(`${url}&gacha_type=${key}&page=1&size=6`)
@@ -277,7 +278,7 @@ const tryGetUid = async (queryString) => {
 }
 
 const getGachaType = async (queryString) => {
-  const text = i18n.log
+  /* const text = i18n.log
   const gachaTypeUrl = `${apiDomain}/event/gacha_info/api/getConfigList?${queryString}`
   sendMsg(text.fetch.gachaType)
   const res = await request(gachaTypeUrl)
@@ -292,7 +293,9 @@ const getGachaType = async (queryString) => {
   })
   orderedGachaTypes.push(...gachaTypes)
   sendMsg(text.fetch.gachaTypeOk)
-  return orderedGachaTypes
+  return orderedGachaTypes */
+  // 目前暂未找到相应的切换接口
+  return [{key: '11', name: '角色活动跃迁'}, {key: '12', name: '光锥活动跃迁'}, {key: '1', name: '群星跃迁'}, {key: '2', name: '始发跃迁'}]
 }
 
 const fixAuthkey = (url) => {
@@ -306,10 +309,10 @@ const fixAuthkey = (url) => {
 const getQuerystring = (url) => {
   const text = i18n.log
   const { searchParams, host } = new URL(fixAuthkey(url))
-  if (host.includes('webstatic-sea') || host.includes('hk4e-api-os')) {
-    apiDomain = 'https://hk4e-api-os.mihoyo.com'
+  if (host.includes('webstatic-sea') || host.includes('hkrpg-api-os') || host.includes("api-os-takumi")) {
+    apiDomain = 'https://api-os-takumi.mihoyo.com'
   } else {
-    apiDomain = 'https://hk4e-api.mihoyo.com'
+    apiDomain = 'https://api-takumi.mihoyo.com'
   }
   const authkey = searchParams.get('authkey')
   if (!authkey) {
@@ -375,7 +378,7 @@ const getUrlFromConfig = () => {
 const tryRequest = async (url, retry = false) => {
   const queryString = getQuerystring(url)
   if (!queryString) return false
-  const gachaTypeUrl = `${apiDomain}/event/gacha_info/api/getConfigList?${queryString}`
+  const gachaTypeUrl = `${apiDomain}/common/gacha_record/api/getGachaLog?${queryString}&page=1&size=5&gacha_type=1&end_id=0`
   try {
     const res = await request(gachaTypeUrl)
     if (res.retcode !== 0) {
