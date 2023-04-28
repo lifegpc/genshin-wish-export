@@ -14,7 +14,7 @@
 - 支持了检测活动限定UP
 - 移除了自动更新以防更新出现问题
 
-崩铁记录导出见[hsr](/lifegpc/genshin-wish-export/tree/hsr)分支
+崩铁记录导出见[hsr](https://github.com/lifegpc/genshin-wish-export/tree/hsr)分支
 
 ## 从 Excel 恢复数据
 https://genshin-gacha-export.danmu9.com
