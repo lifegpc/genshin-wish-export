@@ -155,7 +155,7 @@ const readLog = async () => {
       return false
     }
     const promises = gameNames.map(async name => {
-      const logText = await fs.readFile(`${userPath}/AppData/LocalLow/miHoYo/${name}/output_log.txt`, 'utf8')
+      const logText = await fs.readFile(`${userPath}/AppData/LocalLow/miHoYo/${name}/Player-prev.log`, 'utf8')
       const gamePathMch = logText.match(/\w:\/.+(StarRail_Data)/)
       if (gamePathMch) {
         const cacheText = await fs.readFile(path.join(gamePathMch[0], '/webCaches/Cache/Cache_Data/data_2'), 'utf8')
