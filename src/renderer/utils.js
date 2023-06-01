@@ -228,6 +228,9 @@ const isUP = (name, type, timestamp) => {
     // 3.6
     if (timestamp >= 1681250400000 && timestamp < 1683021600000) return type == "301" ? isNahida(name) : isNilou(name)
     if (timestamp >= 1683021600000 && timestamp < 1684825200000) return type == "301" ? isBaizhu(name) : isGanyu(name)
+    // 3.7
+    if (timestamp >= 1684897200000 && timestamp < 1686650400000) return type == "301" ? isYoimiya(name) : isYaeMiko(name)
+    if (timestamp >= 1686650400000 && timestamp < 1688454000000) return type == "301" ? isKaedeharaKazuha(name) : isAlhaitham(name)
     return null;
 }
 
