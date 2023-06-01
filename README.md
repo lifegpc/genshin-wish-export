@@ -10,6 +10,12 @@
 
 需要更详细的数据分析，可以在导出 Excel 文件后使用这个项目的网页：[链接](https://github.com/voderl/genshin-gacha-analyzer)
 
+## 修改的部分
+- 支持了检测活动限定UP
+- 移除了自动更新以防更新出现问题
+
+崩铁记录导出见[hsr](https://github.com/lifegpc/genshin-wish-export/tree/hsr)分支
+
 ## 从 Excel 恢复数据
 https://genshin-gacha-export.danmu9.com
 
