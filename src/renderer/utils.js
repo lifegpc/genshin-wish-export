@@ -112,7 +112,7 @@ const YelanNames = new Set([
 ])
 
 const YoimiyaNames = new Set([
-    '宵宮', 'Yoimiya', 'Ёимия', 'Йоімія'
+    '宵宫', '宵宮', 'Yoimiya', 'Ёимия', 'Йоімія'
 ])
 
 const ZhongliNames = new Set([
