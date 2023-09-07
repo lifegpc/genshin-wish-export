@@ -63,6 +63,10 @@ const KleeNames = new Set([
     '可莉', 'Klee', 'クレー', 'Кли', 'Клі'
 ])
 
+const LyneyNames = new Set([
+    '林尼', 'Lyney', 'リネ', '리니', 'Лини'
+])
+
 const NahidaNames = new Set([
     '纳西妲', 'Nahida', '納西妲', 'ナヒーダ', 'Нахида'
 ])
@@ -134,6 +138,7 @@ const isKamisatoAyaka = (name) => KamisatoAyakaNames.has(name)
 const isKamisatoAyato = (name) => KamisatoAyatoNames.has(name)
 const isKeqing = (name) => KeqingNames.has(name)
 const isKlee = (name) => KleeNames.has(name)
+const isLyney = (name) => LyneyNames.has(name)
 const isNahida = (name) => NahidaNames.has(name)
 const isNilou = (name) => NilouNames.has(name)
 const isRaidenShogun = (name) => RaidenShogunNames.has(name)
@@ -231,6 +236,12 @@ const isUP = (name, type, timestamp) => {
     // 3.7
     if (timestamp >= 1684897200000 && timestamp < 1686650400000) return type == "301" ? isYoimiya(name) : isYaeMiko(name)
     if (timestamp >= 1686650400000 && timestamp < 1688454000000) return type == "301" ? isKaedeharaKazuha(name) : isAlhaitham(name)
+    // 3.8
+    if (timestamp >= 1688526000000 && timestamp < 1690279200000) return type == "301" ? isEula(name) : isKlee(name)
+    if (timestamp >= 1690279200000 && timestamp < 1692082800000) return type == "301" ? isSangonomiyaKokomi(name) : isWanderer(name)
+    // 4.0
+    if (timestamp >= 1692154800000 && timestamp < 1693908000000) return type == "301" ? isLyney(name) : isYelan(name)
+    if (timestamp >= 1693908000000 && timestamp < 1695711600000) return type == "301" ? isZhongli(name) : isTartaglia(name)
     return null;
 }
 
