@@ -237,10 +237,10 @@ const isUP = (name, type, timestamp) => {
     if (timestamp >= 1684897200000 && timestamp < 1686650400000) return type == "301" ? isYoimiya(name) : isYaeMiko(name)
     if (timestamp >= 1686650400000 && timestamp < 1688454000000) return type == "301" ? isKaedeharaKazuha(name) : isAlhaitham(name)
     // 3.8
-    if (timestamp >= 1688526000000 && timestamp < 1690279200000) return type == "301" ? isEula(name) : isKlee(name)
+    if (timestamp >= 1688508000000 && timestamp < 1690279200000) return type == "301" ? isEula(name) : isKlee(name)
     if (timestamp >= 1690279200000 && timestamp < 1692082800000) return type == "301" ? isSangonomiyaKokomi(name) : isWanderer(name)
     // 4.0
-    if (timestamp >= 1692154800000 && timestamp < 1693908000000) return type == "301" ? isLyney(name) : isYelan(name)
+    if (timestamp >= 1692136800000 && timestamp < 1693908000000) return type == "301" ? isLyney(name) : isYelan(name)
     if (timestamp >= 1693908000000 && timestamp < 1695711600000) return type == "301" ? isZhongli(name) : isTartaglia(name)
     return null;
 }
